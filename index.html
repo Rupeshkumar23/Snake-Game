@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- Added user-scalable=no for mobile -->
     <title>Snake Game</title>
     <style>
         body {
@@ -10,27 +10,74 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh; /* Use min-height for flexibility */
             margin: 0;
             background-color: #2c3e50;
             font-family: Arial, sans-serif;
+            padding: 10px; /* Add padding for smaller screens */
+            box-sizing: border-box;
         }
         #game-board {
             border: 2px solid #fff;
             background-color: #34495e;
+            /* Make canvas responsive if needed, but fixed size is simpler for grid */
+            /* max-width: 100%; */
+            /* height: auto; */
         }
         #score {
             color: #fff;
             font-size: 2em;
-            margin: 20px 0;
+            margin: 15px 0; /* Adjusted margin */
         }
         .game-over {
             position: absolute;
+            /* Adjust position relative to game board if needed */
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: #fff;
-            font-size: 3em;
+            font-size: 2.5em; /* Slightly smaller */
             text-align: center;
             display: none;
+            background-color: rgba(0, 0, 0, 0.7); /* Add background for readability */
+            padding: 20px;
+            border-radius: 10px;
         }
+
+        /* NEW Styles for Control Buttons */
+        #controls {
+            display: grid;
+            grid-template-columns: repeat(3, 60px); /* 3 columns, each 60px wide */
+            grid-template-rows: repeat(2, 60px); /* 2 rows, each 60px high */
+            gap: 5px; /* Space between buttons */
+            margin-top: 20px; /* Space above controls */
+            justify-content: center; /* Center the grid horizontally */
+        }
+
+        #controls button {
+            font-size: 1.8em;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none; /* Prevent text selection on double tap */
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+        }
+
+        #controls button:active {
+            background-color: #2980b9; /* Darker shade when pressed */
+        }
+
+        /* Position buttons in the grid */
+        #btn-up { grid-column: 2; grid-row: 1; }
+        #btn-left { grid-column: 1; grid-row: 2; }
+        #btn-down { grid-column: 2; grid-row: 2; }
+        #btn-right { grid-column: 3; grid-row: 2; }
+
     </style>
 </head>
 <body>
@@ -40,6 +87,16 @@
         Game Over!<br>
         Press Space to Restart
     </div>
+
+    <!-- NEW Control Buttons Section -->
+    <div id="controls">
+        <button id="btn-up">↑</button>
+        <button id="btn-left">←</button>
+        <button id="btn-down">↓</button>
+        <button id="btn-right">→</button>
+    </div>
+    <!-- End of Control Buttons Section -->
+
     <script src="snake.js"></script>
 </body>
-</html> 
+</html>
